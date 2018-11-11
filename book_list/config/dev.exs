@@ -68,7 +68,7 @@ config :phoenix, :plug_init_mode, :runtime
 
 # Configure your database
 config :book_list, BookList.Repo,
-  username: "postgres",
+  username: "book_list",
   password: "postgres",
   database: "book_list_dev",
   hostname: "localhost",
