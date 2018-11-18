@@ -26,6 +26,7 @@ defmodule BookListWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/books/:id", PageController, :index
   end
 
   # Other scopes may use custom stacks.
