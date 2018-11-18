@@ -28,8 +28,8 @@ Repo.insert!(%Book{title: "PAST TENSE",
   author: "Annette Gordon-Reed and Peter S Onuf",
   publisher: "Delacorte",
   isbn: "0399593519",
-  amazon_url: "https://s1.nyt.com/du/books/images/9780399593512.jpg",
-  cover_url: "https://www.amazon.com/Past-Tense-Jack-Reacher-Novel/dp/0399593519?tag=NYTBS-20"})
+  cover_url: "https://s1.nyt.com/du/books/images/9780399593512.jpg",
+  amazon_url: "https://www.amazon.com/Past-Tense-Jack-Reacher-Novel/dp/0399593519?tag=NYTBS-20"})
 
 Repo.insert!(%Book{title: "NINE PERFECT STRANGERS",
   description: "A romance writer becomes fascinated by the owner and director of a health resort.",

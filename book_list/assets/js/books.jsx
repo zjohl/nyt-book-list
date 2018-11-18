@@ -15,6 +15,7 @@ function BookCard(props) {
     let {book} = props;
     return <div className="book-card">
         <div className="book-content">
+            <img className="cover-img" src={book.cover_url} alt={book.title}/>
             <h2 className="book-title">{book.title}</h2>
         </div>
     </div>;
