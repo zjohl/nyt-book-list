@@ -13,7 +13,6 @@ defmodule BookListWeb.UserView do
   def render("user.json", %{user: user}) do
     %{id: user.id,
       email: user.email,
-      password: user.password,
       first_name: user.first_name,
       last_name: user.last_name}
   end
