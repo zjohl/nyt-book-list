@@ -74,7 +74,6 @@ class Server {
             "/api/v1/sessions",
             {email, password},
             (resp) => {
-                debugger;
                 Cookies.set('token', resp.data.token, { expires: 7 });
                 Cookies.set('user_id', resp.data.user_id, { expires: 7 });
                 store.dispatch({

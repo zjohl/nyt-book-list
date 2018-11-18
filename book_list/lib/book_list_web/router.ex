@@ -20,6 +20,8 @@ defmodule BookListWeb.Router do
     resources "/book_lists", BookListController, except: [:new, :edit]
     resources "/reviews", ReviewController, except: [:new, :edit]
     resources "/users", UserController, except: [:new, :edit]
+
+    resources "/sessions", SessionController, only: [:create]
   end
 
   scope "/", BookListWeb do
