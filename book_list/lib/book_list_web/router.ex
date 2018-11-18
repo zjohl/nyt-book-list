@@ -13,6 +13,15 @@ defmodule BookListWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/api/v1", BookListWeb do
+    pipe_through :api
+
+    resources "/books", BookController, except: [:new, :edit]
+    resources "/book_lists", BookListController, except: [:new, :edit]
+    resources "/reviews", ReviewController, except: [:new, :edit]
+    resources "/users", UserController, except: [:new, :edit]
+  end
+
   scope "/", BookListWeb do
     pipe_through :browser
 
