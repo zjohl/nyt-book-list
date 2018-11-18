@@ -5,8 +5,8 @@ defmodule BookList.Reviews.Review do
 
   schema "reviews" do
     field :content, :string
-    field :user_id, :id
-    field :book_id, :id
+    belongs_to :user, BookList.Users.User
+    belongs_to :book, BookList.Books.Book
 
     timestamps()
   end
@@ -14,7 +14,7 @@ defmodule BookList.Reviews.Review do
   @doc false
   def changeset(review, attrs) do
     review
-    |> cast(attrs, [:content])
-    |> validate_required([:content])
+    |> cast(attrs, [:content, :user_id, :book_id])
+    |> validate_required([:content, :user_id, :book_id])
   end
 end

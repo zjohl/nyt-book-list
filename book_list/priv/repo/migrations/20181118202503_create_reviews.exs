@@ -12,5 +12,7 @@ defmodule BookList.Repo.Migrations.CreateReviews do
 
     create index(:reviews, [:user_id])
     create index(:reviews, [:book_id])
+    create index(:reviews, [:book_id, :user_id], unique: true)
+
   end
 end

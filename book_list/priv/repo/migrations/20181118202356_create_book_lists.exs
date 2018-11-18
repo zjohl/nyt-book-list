@@ -12,5 +12,6 @@ defmodule BookList.Repo.Migrations.CreateBookLists do
 
     create index(:book_lists, [:user_id])
     create index(:book_lists, [:book_id])
+    create index(:book_lists, [:book_id, :user_id], unique: true)
   end
 end

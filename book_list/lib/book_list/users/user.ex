@@ -9,6 +9,9 @@ defmodule BookList.Users.User do
     field :last_name, :string
     field :password_hash, :string
 
+    has_many :book_list, BookList.BookLists.BookList
+    has_many :review, BookList.Reviews.Review
+
     timestamps()
   end
 

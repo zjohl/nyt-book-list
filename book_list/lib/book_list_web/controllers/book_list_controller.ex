@@ -11,12 +11,20 @@ defmodule BookListWeb.BookListController do
     render(conn, "index.json", book_lists: book_lists)
   end
 
-  def create(conn, %{"book_list" => book_list_params}) do
-    with {:ok, %BookList{} = book_list} <- BookLists.create_book_list(book_list_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.book_list_path(conn, :show, book_list))
-      |> render("show.json", book_list: book_list)
+  def create(conn, %{"book_list" => book_list_params, "token" => token}) do
+    result = Phoenix.Token.verify(BookListWeb.Endpoint, "user_id", token, max_age: 86400)
+
+    case result do
+      {:ok, _} ->
+        with {:ok, %BookList{} = book_list} <- BookLists.create_book_list(book_list_params) do
+          conn
+          |> put_status(:created)
+          |> put_resp_header("location", Routes.book_list_path(conn, :show, book_list))
+          |> render("show.json", book_list: book_list)
+        end
+      _ ->
+        conn
+        |> put_status(:not_authorized)
     end
   end
 

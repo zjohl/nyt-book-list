@@ -12,6 +12,9 @@ defmodule BookList.Books.Book do
     field :publisher, :string
     field :title, :string
 
+    has_many :book_list, BookList.BookLists.BookList
+    has_many :review, BookList.Reviews.Review
+
     timestamps()
   end
 

@@ -35,6 +35,30 @@ class Server {
         );
     }
 
+    fetch_book_lists() {
+        this.fetch_path(
+            "/api/v1/book_lists",
+            (resp) => {
+                store.dispatch({
+                    type: 'BOOK_LISTS',
+                    data: resp.data,
+                });
+            }
+        );
+    }
+
+    fetch_reviews() {
+        this.fetch_path(
+            "/api/v1/reviews",
+            (resp) => {
+                store.dispatch({
+                    type: 'REVIEWS',
+                    data: resp.data,
+                });
+            }
+        );
+    }
+
     fetch_users() {
         this.fetch_path(
             "/api/v1/users",
@@ -55,6 +79,19 @@ class Server {
             data: JSON.stringify(user_data),
             success: (resp) => {
                 this.fetch_users();
+            }
+        });
+    }
+
+    create_book_list_entry(book_list_data) {
+        let state = store.getState();
+        $.ajax("/api/v1/book_lists/", {
+            method: "post",
+            dataType: "json",
+            contentType: "application/json; charset=UTF-8",
+            data: JSON.stringify(_.merge(book_list_data, {token: state.session.token})),
+            success: (resp) => {
+                this.fetch_book_lists();
             }
         });
     }
