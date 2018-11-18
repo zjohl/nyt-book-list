@@ -6,8 +6,8 @@ defmodule BookListWeb.BookListController do
 
   action_fallback BookListWeb.FallbackController
 
-  def index(conn, _params) do
-    book_lists = BookLists.list_book_lists()
+  def index(conn,  %{"user_id" => user_id}) do
+    book_lists = BookLists.list_book_lists(user_id)
     render(conn, "index.json", book_lists: book_lists)
   end
 

@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import api from './api';
 import BookList from './books';
 import BookPage from './book_page';
+import BookListPage from './book_list_page';
 import Header from './header';
 
 export default function root_init(node, store) {
@@ -39,6 +40,7 @@ class Root extends React.Component {
                         </div>
                     }/>
                     <Route  path="/books/:id" component={BookPage} />
+                    <Route  path="/wishlist" component={BookListPage} />
                 </div>
             </Router>
         </div>;

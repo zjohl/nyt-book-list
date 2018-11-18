@@ -10,6 +10,24 @@ function books(state = [], action) {
     }
 }
 
+function book_lists(state = [], action) {
+    switch (action.type) {
+        case 'BOOK_LISTS':
+            return action.data;
+        default:
+            return state;
+    }
+}
+
+function reviews(state = [], action) {
+    switch (action.type) {
+        case 'REVIEWS':
+            return action.data;
+        default:
+            return state;
+    }
+}
+
 function users(state = [], action) {
     switch (action.type) {
         case 'USER_LIST':
@@ -33,7 +51,7 @@ function session(state = null, action) {
 function root_reducer(state0, action) {
     console.log("reducer", state0, action);
 
-    let reducer = combineReducers({books, users, session});
+    let reducer = combineReducers({books, book_lists, reviews, users, session});
     let state1 = reducer(state0, action);
 
     console.log("reducer1", state1);

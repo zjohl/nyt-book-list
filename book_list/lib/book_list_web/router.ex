@@ -29,6 +29,7 @@ defmodule BookListWeb.Router do
 
     get "/", PageController, :index
     get "/books/:id", PageController, :index
+    get "/wishlist", PageController, :index
   end
 
   # Other scopes may use custom stacks.

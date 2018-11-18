@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import api from './api';
 
+
 function BookPage(props) {
     let {session} = props;
     let authenticated = session && session.token;
@@ -34,7 +35,7 @@ function BookPage(props) {
         );
     }
 
-    return <div className="book-card">
+    return <div className="book">
         <div className="book-content">
             <img className="cover-img" src={book.cover_url} alt={book.title}/>
             <h2 className="book-title">{book.title}</h2>

@@ -12,6 +12,8 @@ defmodule BookListWeb.BookListView do
 
   def render("book_list.json", %{book_list: book_list}) do
     %{id: book_list.id,
-      type: book_list.type}
+      type: book_list.type,
+      user_id: book_list.user_id,
+      book_id: book_list.book_id}
   end
 end

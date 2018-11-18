@@ -6,6 +6,7 @@ class Server {
         let token = Cookies.get('token');
         let user_id = Cookies.get('user_id');
         if (token && user_id) {
+            this.fetch_book_lists(user_id);
             store.dispatch({
                 type: 'NEW_SESSION',
                 data: {token: token, user_id: user_id},
@@ -13,12 +14,12 @@ class Server {
         }
     }
 
-    fetch_path(path, callback) {
+    fetch_path(path, callback, data = "") {
         $.ajax(path, {
             method: "get",
             dataType: "json",
             contentType: "application/json; charset=UTF-8",
-            data: "",
+            data: data,
             success: callback,
         });
     }
@@ -35,7 +36,7 @@ class Server {
         );
     }
 
-    fetch_book_lists() {
+    fetch_book_lists(user_id) {
         this.fetch_path(
             "/api/v1/book_lists",
             (resp) => {
@@ -43,7 +44,7 @@ class Server {
                     type: 'BOOK_LISTS',
                     data: resp.data,
                 });
-            }
+            }, {user_id}
         );
     }
 
@@ -76,9 +77,10 @@ class Server {
             method: "post",
             dataType: "json",
             contentType: "application/json; charset=UTF-8",
-            data: JSON.stringify(user_data),
+                data: JSON.stringify(user_data),
             success: (resp) => {
                 this.fetch_users();
+                this.fetch_book_lists(user_data.user.id);
             }
         });
     }

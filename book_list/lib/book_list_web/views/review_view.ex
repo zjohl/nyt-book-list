@@ -12,6 +12,8 @@ defmodule BookListWeb.ReviewView do
 
   def render("review.json", %{review: review}) do
     %{id: review.id,
-      content: review.content}
+      content: review.content,
+      user_id: review.user_id,
+      book_id: review.book_id}
   end
 end

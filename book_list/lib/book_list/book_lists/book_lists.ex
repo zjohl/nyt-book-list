@@ -17,8 +17,8 @@ defmodule BookList.BookLists do
       [%BookList{}, ...]
 
   """
-  def list_book_lists do
-    Repo.all(BookList)
+  def list_book_lists(user_id) do
+    Repo.all(from bl in BookList, where: bl.user_id == ^user_id)
   end
 
   @doc """
