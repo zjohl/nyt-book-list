@@ -9,7 +9,7 @@ import BookCard from './book_card';
 
 function BookList(props) {
     let books = _.map(props.books, (book) => <BookCard key={book.id} book={book} />);
-    return <div className="book-list">
+    return <div className="index-books">
         {books}
     </div>;
 }

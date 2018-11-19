@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import api from './api';
+import BookListButton from './book_list_button';
+
 
 
 function BookPage(props) {
@@ -15,35 +17,22 @@ function BookPage(props) {
         return null;
     }
 
-    function addToWishlist() {
-        api.create_book_list_entry({
-            book_list: {
-                type: "wishlist",
-                book_id: props.match.params.id,
-                user_id: props.session.user_id,
-            }
-        });
-    }
-
-    function wishlistButton() {
-        if(!authenticated) {
-            return null;
-        }
-
-        return (
-            <button onClick={addToWishlist}>Add to Wishlist</button>
-        );
-    }
+    let book_list = _.find(props.book_lists, (item) => { return id === item.book_id.toString() && session.user_id === item.user_id.toString() });
 
     return <div className="book">
         <div className="book-content">
             <img className="cover-img" src={book.cover_url} alt={book.title}/>
             <h2 className="book-title">{book.title}</h2>
             <h3 className="book-author">{book.author}</h3>
-            {wishlistButton()}
+            {<BookListButton
+                book_id={id}
+                user_id={session.user_id}
+                authenticated={authenticated}
+                book_list={book_list}
+            />}
         </div>
     </div>;
 }
 
 
-export default connect((state) => {return {books: state.books, users: state.users, session: state.session};})(BookPage);
+export default connect((state) => {return {book_lists: state.book_lists, books: state.books, users: state.users, session: state.session};})(BookPage);

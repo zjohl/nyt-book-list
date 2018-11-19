@@ -93,7 +93,20 @@ class Server {
             contentType: "application/json; charset=UTF-8",
             data: JSON.stringify(_.merge(book_list_data, {token: state.session.token})),
             success: (resp) => {
-                this.fetch_book_lists();
+                this.fetch_book_lists(state.session.user_id);
+            }
+        });
+    }
+
+    delete_book_list_entry(id) {
+        let state = store.getState();
+        $.ajax(`/api/v1/book_lists/${id}`, {
+            method: "delete",
+            dataType: "json",
+            contentType: "application/json; charset=UTF-8",
+            data: JSON.stringify({token: state.session.token}),
+            success: (resp) => {
+                this.fetch_book_lists(state.session.user_id);
             }
         });
     }

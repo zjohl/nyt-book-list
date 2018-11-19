@@ -1,5 +1,4 @@
 import React from "react";
-import connect from "react-redux/es/connect/connect";
 
 function BookCard(props) {
     let {book} = props;

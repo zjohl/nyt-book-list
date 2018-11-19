@@ -41,11 +41,19 @@ defmodule BookListWeb.BookListController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    book_list = BookLists.get_book_list!(id)
+  def delete(conn, %{"id" => id, "token" => token}) do
+    result = Phoenix.Token.verify(BookListWeb.Endpoint, "user_id", token, max_age: 86400)
 
-    with {:ok, %BookList{}} <- BookLists.delete_book_list(book_list) do
-      send_resp(conn, :no_content, "")
-    end
+    case result do
+      {:ok, _} ->
+        book_list = BookLists.get_book_list!(id)
+
+        with {:ok, %BookList{}} <- BookLists.delete_book_list(book_list) do
+          send_resp(conn, :no_content, "")
+        end
+      _ ->
+        conn
+        |> put_status(:not_authorized)
+      end
   end
 end

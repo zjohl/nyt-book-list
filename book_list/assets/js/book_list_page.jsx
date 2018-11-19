@@ -29,7 +29,7 @@ function BookListPage(props) {
         return <BookCard key={book.id} book={book} />;
     });
     return (
-        <div>
+        <div className="book-list">
             {book_list_items}
         </div>
     )
