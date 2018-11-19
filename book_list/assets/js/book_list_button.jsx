@@ -20,8 +20,13 @@ function BookListButton(props) {
         }
     }
 
-    function dropdown() {
-
+    function dropdown(e) {
+        let button = e.target;
+        if(button.classList.contains('active')) {
+            button.classList.remove('active');
+        } else {
+            button.classList.add('active');
+        }
     }
 
     let onBooklist = !!props.book_list;
