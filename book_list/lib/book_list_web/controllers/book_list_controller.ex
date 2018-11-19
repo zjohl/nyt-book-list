@@ -33,11 +33,19 @@ defmodule BookListWeb.BookListController do
     render(conn, "show.json", book_list: book_list)
   end
 
-  def update(conn, %{"id" => id, "book_list" => book_list_params}) do
-    book_list = BookLists.get_book_list!(id)
+  def update(conn, %{"id" => id, "book_list" => book_list_params, "token" => token}) do
+    result = Phoenix.Token.verify(BookListWeb.Endpoint, "user_id", token, max_age: 86400)
 
-    with {:ok, %BookList{} = book_list} <- BookLists.update_book_list(book_list, book_list_params) do
-      render(conn, "show.json", book_list: book_list)
+    case result do
+      {:ok, _} ->
+        book_list = BookLists.get_book_list!(id)
+
+        with {:ok, %BookList{} = book_list} <- BookLists.update_book_list(book_list, book_list_params) do
+          render(conn, "show.json", book_list: book_list)
+        end
+      _ ->
+        conn
+        |> put_status(:not_authorized)
     end
   end
 
@@ -54,6 +62,6 @@ defmodule BookListWeb.BookListController do
       _ ->
         conn
         |> put_status(:not_authorized)
-      end
+    end
   end
 end
