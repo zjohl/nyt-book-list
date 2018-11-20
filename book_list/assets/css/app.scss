@@ -1,5 +1,6 @@
 html, body {
   width: 100%;
+  height: 100%;
   margin: 0;
 }
 
@@ -14,38 +15,53 @@ div, a, button {
 
 .page-wrapper {
   width: 100%;
+  height: 100%;
+  background-color: #f3f4f4;
 }
 
 .page-content {
   padding: 10px;
+
+  @media (min-width: 820px) {
+    max-width: 960px;
+    margin: auto;
+  }
 }
 
+$color-primary: #088E69;
+$color-secondary: #D9890C;
+$color-blue: #134B8E;
+$color-orange: #D9560C;
+$color-red: #CA0B31;
+$light-grey: #73847F;
 
 // Color Scheme
-// http://paletton.com/#uid=13W0u0kuhrdjPyep1utw6m1EagX
+// http://paletton.com/#uid=1390u0kuhrdkcv6pdtHwFn2DGjh
 .header {
-  background-color: #1B2796;
+  background-color: $color-primary;
   position: static;
   top: 0;
   left: 0;
   width: 100%;
-  height: 40px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  h3 {
-    font-size: 14px;
-  }
-
   .header-left {
-    display: inline-flex;
+    display: flex;
+    align-items: center;
     margin-left: 5px;
     a {
       margin-left: 5px;
       color: black;
       text-decoration: none;
       font-size: 16px;
+    }
+
+    .header-app-link {
+      font-size: 18px;
+      margin-right: 5px;
     }
   }
 
@@ -55,12 +71,17 @@ div, a, button {
     button {
       display: inline-block;
       border: none;
+      border-radius: 2px;
       margin: 0;
       text-decoration: none;
       padding: 5px 10px;
       font-size: 1rem;
       cursor: pointer;
       text-align: center;
+    }
+
+    .logout-btn {
+      background-color: $color-secondary;
     }
   }
 }
@@ -69,10 +90,11 @@ div, a, button {
   width: 100%;
   .links {
     width: 100%;
-    height: 30px;
-    background-color: dimgrey;
+    height: 36px;
+    background-color: $light-grey;
     display: flex;
     justify-content: flex-start;
+    align-items: center;
 
     .link {
       padding: 5px;
@@ -83,16 +105,24 @@ div, a, button {
   }
 
   .content {
-    margin-top: 20px 10px;
+    margin: 20px 10px;
   }
 }
 
 .book-list {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: max-content;
   grid-gap: 20px;
+
+  @media (min-width: 641px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 821px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .index-books {
@@ -101,6 +131,14 @@ div, a, button {
   grid-template-columns: 1fr;
   grid-template-rows: max-content;
   grid-gap: 20px;
+
+  @media (min-width: 641px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 821px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .book-card {
@@ -108,6 +146,7 @@ div, a, button {
   display: flex;
   border-radius: 5px;
   overflow: hidden;
+  background-color: white;
   border: 1px solid lightgray;
 
   .cover-image, .book-info {

@@ -43,7 +43,7 @@ function Header(props) {
 
     return <div className="header">
         <div className="header-left">
-            <h3><Link to={"/"} onClick={() => api.fetch_books()}>NYT Bestsellers</Link></h3>
+            <Link className="header-app-link" to={"/"} onClick={() => api.fetch_books()}>NYT Bestsellers</Link>
             {renderWishlistLink(authenticated)}
         </div>
         <div className="header-right">

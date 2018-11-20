@@ -34,13 +34,21 @@ class Root extends React.Component {
             <Router>
                 <div>
                     <Header/>
-                    <Route path="/" exact={true} render={() =>
+                    <Route path="/" exact={true} render={(props) =>
                         <div className="page-content">
-                            <BookList />
+                            <BookList {...props}/>
                         </div>
                     }/>
-                    <Route  path="/books/:id" component={BookPage} />
-                    <Route  path="/booklists/:type" component={BookListPage} />
+                    <Route  path="/books/:id" render={(props) =>
+                        <div className="page-content">
+                            <BookPage {...props}/>
+                        </div>
+                    } />
+                    <Route  path="/booklists/:type" render={(props) =>
+                        <div className="page-content">
+                            <BookListPage {...props}/>
+                        </div>
+                    } />
                 </div>
             </Router>
         </div>;
