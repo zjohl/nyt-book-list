@@ -5,6 +5,7 @@ html, body {
 
 h1,h2,h3,h4 {
   margin: 0;
+  font-family: 'Scope One', serif;
 }
 
 .page-wrapper {
@@ -12,8 +13,7 @@ h1,h2,h3,h4 {
 }
 
 .page-content {
-  width: 100%;
-  margin: 10px;
+  padding: 10px;
 }
 
 
@@ -83,7 +83,7 @@ h1,h2,h3,h4 {
   }
 }
 
-.book-list, .index-books {
+.book-list {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -91,10 +91,33 @@ h1,h2,h3,h4 {
   grid-gap: 20px;
 }
 
+.index-books {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content;
+  grid-gap: 20px;
+}
+
 .book-card {
   width: 100%;
-  .cover-img {
+  display: flex;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid lightgray;
+
+  .cover-image, .book-info {
+    flex: 1;
     width: 100%;
+  }
+
+  .cover {
+    width: 100%;
+    height: 100%;
+  }
+
+  .book-info {
+    padding: 5px;
   }
 }
 
