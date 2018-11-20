@@ -30,6 +30,13 @@ function signInSignUp(authenticated) {
     }
 }
 
+function renderWishlistLink(authenticated) {
+    if(authenticated) {
+        return <Link to={"/booklists/wanted"} onClick={() => api.fetch_book_lists()}>MyWishlists</Link>;
+    }
+    return null;
+}
+
 function Header(props) {
     let {session} = props;
     let authenticated = session && session.token;
@@ -37,6 +44,7 @@ function Header(props) {
     return <div className="header">
         <div className="header-left">
             <h3><Link to={"/"} onClick={() => api.fetch_books()}>NYT Bestsellers</Link></h3>
+            {renderWishlistLink(authenticated)}
         </div>
         <div className="header-right">
             {signInSignUp(authenticated)}

@@ -63,7 +63,9 @@ function BookListPage(props) {
     return (
         <div className="book-lists">
             {bookListHeader()}
-            {bookListContent(props)}
+            <div className="content">
+                {bookListContent(props)}
+            </div>
         </div>
     )
 
