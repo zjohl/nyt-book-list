@@ -10,7 +10,7 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-
+import Ecto.Query, warn: false
 alias BookList.Repo
 alias BookList.Users.User
 
@@ -38,13 +38,20 @@ Enum.each(0..9, fn(_) ->
       books = body["results"]["books"]
 
       Enum.each(books, fn(book) ->
-        Repo.insert!(%Book{title: book["title"],
-          description: book["description"],
-          author: book["author"],
-          isbn: book["primary_isbn10"],
-          publisher: book["publisher"],
-          cover_url:  book["book_image"],
-          amazon_url: book["amazon_product_url"]})
+
+        title = book["title"]
+        desc = book["description"]
+        existing = Repo.one(from(b in Book, where: b.title == ^title and b.description == ^desc))
+
+        if existing == nil do
+          Repo.insert!(%Book{title: title,
+            description: desc,
+            author: book["author"],
+            isbn: book["primary_isbn10"],
+            publisher: book["publisher"],
+            cover_url:  book["book_image"],
+            amazon_url: book["amazon_product_url"]})
+        end
       end)
     {:ok, %HTTPoison.Response{status_code: 404}} ->
       IO.puts "Not found :("
