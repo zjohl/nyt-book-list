@@ -40,7 +40,7 @@ class Root extends React.Component {
                         </div>
                     }/>
                     <Route  path="/books/:id" component={BookPage} />
-                    <Route  path="/wishlist" component={BookListPage} />
+                    <Route  path="/booklists/:type" component={BookListPage} />
                 </div>
             </Router>
         </div>;
