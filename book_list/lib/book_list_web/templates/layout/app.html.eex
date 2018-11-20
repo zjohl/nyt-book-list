@@ -25,7 +25,7 @@
       <% end %>
       <%= render @view_module, @view_template, assigns %>
     </div>
-    <link href="https://fonts.googleapis.com/css?family=Scope+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya|Alegreya+Sans" rel="stylesheet">
     <script type="text/javascript" src="<%= Routes.static_url(@conn, "/js/app.js") %>">
     </script>
   </body>

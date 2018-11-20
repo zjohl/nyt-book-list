@@ -5,7 +5,11 @@ html, body {
 
 h1,h2,h3,h4 {
   margin: 0;
-  font-family: 'Scope One', serif;
+  font-family: 'Alegreya', serif;
+}
+
+div, a, button {
+  font-family: 'Alegreya Sans', sans-serif;
 }
 
 .page-wrapper {
