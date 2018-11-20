@@ -127,6 +127,19 @@ class Server {
         });
     }
 
+    create_review(review_data) {
+        let state = store.getState();
+        $.ajax("/api/v1/reviews/", {
+            method: "post",
+            dataType: "json",
+            contentType: "application/json; charset=UTF-8",
+            data: JSON.stringify(_.merge(review_data, {token: state.session.token})),
+            success: (resp) => {
+                this.fetch_reviews(review_data.review.book_id);
+            }
+        });
+    }
+
     send_post(path, data, callback) {
         $.ajax(path, {
             method: "post",

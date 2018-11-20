@@ -11,12 +11,20 @@ defmodule BookListWeb.ReviewController do
     render(conn, "index.json", reviews: reviews)
   end
 
-  def create(conn, %{"review" => review_params}) do
-    with {:ok, %Review{} = review} <- Reviews.create_review(review_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.review_path(conn, :show, review))
-      |> render("show.json", review: review)
+  def create(conn, %{"review" => review_params, "token" => token}) do
+    result = Phoenix.Token.verify(BookListWeb.Endpoint, "user_id", token, max_age: 86400)
+
+    case result do
+      {:ok, _} ->
+        with {:ok, %Review{} = review} <- Reviews.create_review(review_params) do
+          conn
+          |> put_status(:created)
+          |> put_resp_header("location", Routes.review_path(conn, :show, review))
+          |> render("show.json", review: review)
+        end
+      _ ->
+        conn
+        |> put_status(:not_authorized)
     end
   end
 

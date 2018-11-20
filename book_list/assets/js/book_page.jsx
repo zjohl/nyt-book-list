@@ -17,27 +17,59 @@ class BookPage extends React.Component {
         }
     }
 
-    reviewContent(reviews, book, users) {
-        if(_.isEmpty(reviews)) {
+    createReview() {
+        let reviewTextbox = $("#review")
+        api.create_review({
+            review: {
+                content: reviewTextbox.val(),
+                book_id: this.props.match.params.id,
+                user_id: this.props.session.user_id,
+            }
+        });
+        reviewTextbox.val("");
+    }
+
+    reviews(reviews, users) {
+        if(_.isEmpty(users) || _.isEmpty(reviews)) {
             return <p>No reviews yet</p>;
         }
 
-
-
-        let bookReviews = _.map(reviews, (review) => {
+        return _.map(reviews, (review) => {
             let user = _.find(users, (user) => {
                 return user.id == review.user_id;
             })
 
-            return <div>
+            return <div key={review.id}>
                 <p>{user.first_name} said:</p>
                 <p>{review.content}</p>
             </div>
         })
+    }
+
+    newReviewForm(hasReview) {
+        if(hasReview) {
+            return null;
+        }
+
+        return (
+            <div className="new-review">
+                        <textarea id="review" name="review" minLength="1" spellCheck="true"
+                                  rows="5" cols="33" placeholder="Leave a review">
+                        </textarea>
+                <button className="review-button button" onClick={this.createReview.bind(this)}>Submit review</button>
+            </div>
+        );
+    }
+
+    reviewContent(reviews, book, users, user_id) {
+        let hasReview = _.some(reviews, (review) =>{
+            return review.book_id === book.id && review.user_id.toString() === user_id;
+        })
 
         return (
             <div>
-                {bookReviews}
+                {this.newReviewForm(hasReview)}
+                {this.reviews(reviews, users)}
             </div>
         )
     }
@@ -81,7 +113,12 @@ class BookPage extends React.Component {
                 </div>
                 <div className="reviews">
                     <h2>Reviews</h2>
-                    {this.reviewContent(this.props.reviews, book, this.props.users)}
+                    {this.reviewContent(
+                        this.props.reviews,
+                        book,
+                        this.props.users,
+                        authenticated ? session.user_id : 0,
+                    )}
                 </div>
             </div>
         </div>;
