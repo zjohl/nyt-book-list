@@ -21,19 +21,25 @@ function BookPage(props) {
 
     return <div className="book">
         <div className="book-content">
-            <img className="cover-img" src={book.cover_url} alt={book.title}/>
-            <h2 className="book-title">{book.title}</h2>
-            <h3 className="book-author">Written by: {book.author}</h3>
-            <p className="book-description">{book.description}</p>
-            <p className="book-publisher">Publisher: {book.publisher}</p>
-            <p className="book-isbn">Isbn: {book.isbn}</p>
-            <a href={book.amazon_url}>Buy from Amazon</a>
-            {<BookListButton
-                book_id={id}
-                user_id={session.user_id}
-                authenticated={authenticated}
-                book_list={book_list}
-            />}
+            <div className="cover-image">
+                <img className="cover" src={book.cover_url} alt={book.title}/>
+            </div>
+            <div className="book-details">
+                <h2 className="book-title">{book.title}</h2>
+                <h3 className="book-author">Written by: {book.author}</h3>
+                <p className="book-description">{book.description}</p>
+                <p className="book-publisher">Publisher: {book.publisher}</p>
+                <p className="book-isbn">Isbn: {book.isbn}</p>
+                <div className="buttons">
+                    <a className="amazon-button" href={book.amazon_url}>Buy from Amazon</a>
+                    {<BookListButton
+                        book_id={id}
+                        user_id={session.user_id}
+                        authenticated={authenticated}
+                        book_list={book_list}
+                    />}
+                </div>
+            </div>
         </div>
     </div>;
 }

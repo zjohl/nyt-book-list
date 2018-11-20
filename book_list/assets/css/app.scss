@@ -87,6 +87,18 @@ $light-grey: #73847F;
   }
 }
 
+.button {
+  display: inline-block;
+  border: none;
+  border-radius: 2px;
+  margin: 0;
+  text-decoration: none;
+  padding: 5px 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+}
+
 .book-lists {
   width: 100%;
   .links {
@@ -165,6 +177,56 @@ $light-grey: #73847F;
   }
 }
 
+.book {
+  .cover-image {
+    width: 100%;
+    max-width: 320px;
+    margin: auto;
+
+    .cover {
+      width: 100%;
+    }
+  }
+
+  .book-details {
+    margin-top: 10px;
+  }
+
+  .buttons {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .amazon-button {
+      display: inline-block;
+      background-color: $color-red;
+      color: black;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      padding: 12px 16px;
+      border-radius: 4px;
+    }
+  }
+
+  @media (min-width: 641px) {
+    .book-content {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: min-content 1fr min-content;
+      grid-gap: 20px;
+      .cover-image {
+        grid-column: 1 / 1;
+      }
+
+      .book-details {
+        grid-column: 2 / 2;
+      }
+    }
+  }
+}
+
 .booklist-button {
   border-radius: 4px;
   //overflow: hidden;
@@ -172,7 +234,9 @@ $light-grey: #73847F;
   display: inline-block;
 
   .button {
-    min-width: 180px;
+    min-width: 152px;
+    border-radius: 4px 0 0 4px;
+    overflow: hidden;
   }
 
   .button, .dropdown {
@@ -180,7 +244,7 @@ $light-grey: #73847F;
     border: none;
     margin: 0;
     text-decoration: none;
-    padding: 1rem 1rem;
+    padding: 12px 6px;
     background: $color-blue;
     font-size: 1rem;
     cursor: pointer;
@@ -200,6 +264,9 @@ $light-grey: #73847F;
   .dropdown {
     outline: 1px solid black;
     outline-offset: -2px;
+    padding: 12px 12px;
+    border-radius: 0 4px 4px 0;
+    overflow: hidden;
   }
 
   &.active {
@@ -210,13 +277,15 @@ $light-grey: #73847F;
 
   .dropdown-options {
     display: none;
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
 
     .dropdown-option {
       display: inline-block;
       border: none;
       margin: 0;
       text-decoration: none;
-      padding: 1rem 1rem;
+      padding: 12px 6px;
       background: $color-blue;
       font-size: 1rem;
       cursor: pointer;
@@ -231,6 +300,10 @@ $light-grey: #73847F;
         transform: scale(0.99);
       }
     }
+  }
+  .dropdown.active {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
   }
 
   .dropdown.active + .dropdown-options{
