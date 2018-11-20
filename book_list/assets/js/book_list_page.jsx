@@ -19,7 +19,8 @@ function bookListHeader() {
 }
 
 function bookListContent(props) {
-    let {book_lists, books} = props;
+    let {book_lists, books, session} = props;
+    let authenticated = session && session.token;
     let type = props.match.params.type;
 
     if(!book_lists) {
@@ -41,7 +42,13 @@ function bookListContent(props) {
 
     let book_list_items = _.map(book_lists, (item) => {
         let book = _.find(books, (book) => { return book.id === item.book_id });
-        return <BookCard key={book.id} book={book} />;
+        return <BookCard
+            key={book.id}
+            book={book}
+            booklists={book_lists}
+            authenticated={authenticated}
+            session={session}
+        />;
     });
 
     return (
