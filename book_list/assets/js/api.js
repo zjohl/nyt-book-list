@@ -25,6 +25,7 @@ class Server {
     }
 
     fetch_books() {
+
         this.fetch_path(
             "/api/v1/books",
             (resp) => {
@@ -46,9 +47,10 @@ class Server {
                 });
             }, {user_id}
         );
+
     }
 
-    fetch_reviews() {
+    fetch_reviews(book_id) {
         this.fetch_path(
             "/api/v1/reviews",
             (resp) => {
@@ -56,7 +58,7 @@ class Server {
                     type: 'REVIEWS',
                     data: resp.data,
                 });
-            }
+            }, {book_id}
         );
     }
 
@@ -70,6 +72,7 @@ class Server {
                 });
             }
         );
+
     }
 
     create_user(user_data) {

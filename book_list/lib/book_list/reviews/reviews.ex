@@ -17,8 +17,8 @@ defmodule BookList.Reviews do
       [%Review{}, ...]
 
   """
-  def list_reviews do
-    Repo.all(Review)
+  def list_reviews(book_id) do
+    Repo.all(from r in Review, where: r.book_id == ^book_id)
   end
 
   @doc """

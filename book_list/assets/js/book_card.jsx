@@ -1,6 +1,9 @@
 import React from "react";
 import BookListButton from './book_list_button';
 import _ from "lodash";
+import { Link } from "react-router-dom";
+import api from "./api";
+
 
 
 function BookCard(props) {
@@ -9,9 +12,9 @@ function BookCard(props) {
 
     return <div className="book-card">
         <div className="cover-image">
-        <a href={"/books/" + book.id}>
+        <Link to={"/books/" + book.id} onClick={() => api.fetch_reviews(book.id)}>
             <img className="cover" src={book.cover_url} alt={book.title}/>
-        </a>
+        </Link>
         </div>
         <div className="book-info">
             <h2 className="book-title">{book.title}</h2>
