@@ -236,6 +236,9 @@ $light-grey: #73847F;
   }
 
   .reviews {
+    width: 100%;
+    grid-column: 1/3;
+
     .new-review {
       display: flex;
       flex-direction: column;
