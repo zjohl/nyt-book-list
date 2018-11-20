@@ -28,13 +28,14 @@ HTTPoison.start
 date = Date.to_iso8601(Date.utc_today)
 apikey = "b0f13f75c1a94540a912b68d7cb5a953"
 
-Enum.each(0..9, fn(_) ->
+Enum.reduce(0..9, date, fn(_, date) ->
+  :timer.sleep(1000)
+
   case HTTPoison.get "https://api.nytimes.com/svc/books/v3/lists/#{date}/hardcover-fiction.json?api-key=#{apikey}" do
     {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
       body = Jason.decode!(body)
 
-      modified = body["last_modified"]
-      date = String.slice(modified, 0..9)
+
       books = body["results"]["books"]
 
       Enum.each(books, fn(book) ->
@@ -53,13 +54,14 @@ Enum.each(0..9, fn(_) ->
             amazon_url: book["amazon_product_url"]})
         end
       end)
+
+      modified = body["last_modified"]
+      String.slice(modified, 0..9)
     {:ok, %HTTPoison.Response{status_code: 404}} ->
       IO.puts "Not found :("
     {:error, %HTTPoison.Error{reason: reason}} ->
       IO.inspect reason
   end
-
-  :timer.sleep(1000)
 end)
 
 
