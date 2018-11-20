@@ -8,12 +8,12 @@ import api from './api';
 import BookCard from './book_card';
 
 
-function bookListHeader() {
+function bookListHeader(type) {
     return (
-        <div className="links">
-            <Link to={`/booklists/wanted`} className="link">Wanted Books</Link>
-            <Link to={`/booklists/owned`} className="link">Owned Books</Link>
-            <Link to={`/booklists/finished`} className="link">Finished Books</Link>
+        <div className={`links ${type}`}>
+            <Link to={`/booklists/wanted`} className="link wanted">Wanted Books</Link>
+            <Link to={`/booklists/owned`} className="link owned">Owned Books</Link>
+            <Link to={`/booklists/finished`} className="link finished">Finished Books</Link>
         </div>
     );
 }
@@ -69,7 +69,7 @@ function BookListPage(props) {
 
     return (
         <div className="book-lists">
-            {bookListHeader()}
+            {bookListHeader(props.match.params.type)}
             <div className="content">
                 {bookListContent(props)}
             </div>
