@@ -21,21 +21,38 @@ Repo.insert!(%User{first_name: "Boo", last_name: "Radley", email: "boo@radley.co
 
 alias BookList.Books.Book
 
+
+
 HTTPoison.start
-resp = HTTPoison.get! "https://api.nytimes.com/svc/books/v3/lists/2018-11-18/hardcover-fiction.json?api-key=b0f13f75c1a94540a912b68d7cb5a953"
 
-body = Jason.decode!(resp.body)
+date = Date.to_iso8601(Date.utc_today)
+apikey = "b0f13f75c1a94540a912b68d7cb5a953"
 
-books = body["results"]["books"]
+Enum.each(0..9, fn(_) ->
+  case HTTPoison.get "https://api.nytimes.com/svc/books/v3/lists/#{date}/hardcover-fiction.json?api-key=#{apikey}" do
+    {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+      body = Jason.decode!(body)
 
-Enum.each(books, fn(book) ->
-  Repo.insert!(%Book{title: book["title"],
-    description: book["description"],
-    author: book["author"],
-    isbn: book["primary_isbn10"],
-    publisher: book["publisher"],
-    cover_url:  book["book_image"],
-    amazon_url: book["amazon_product_url"]})
+      modified = body["last_modified"]
+      date = String.slice(modified, 0..9)
+      books = body["results"]["books"]
+
+      Enum.each(books, fn(book) ->
+        Repo.insert!(%Book{title: book["title"],
+          description: book["description"],
+          author: book["author"],
+          isbn: book["primary_isbn10"],
+          publisher: book["publisher"],
+          cover_url:  book["book_image"],
+          amazon_url: book["amazon_product_url"]})
+      end)
+    {:ok, %HTTPoison.Response{status_code: 404}} ->
+      IO.puts "Not found :("
+    {:error, %HTTPoison.Error{reason: reason}} ->
+      IO.inspect reason
+  end
+
+  :timer.sleep(1000)
 end)
 
 
