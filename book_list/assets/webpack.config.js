@@ -4,6 +4,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+
+const PUBLIC_PATH = 'http://localhost:4000/js/';
 
 module.exports = (env, options) => ({
     optimization: {
@@ -13,11 +16,11 @@ module.exports = (env, options) => ({
         ]
     },
     entry: {
-        './js/app.js': ['./js/app.js'].concat(glob.sync('./vendor/**/*.js'))
+        './js/app.js': ['./js/app.js'].concat(glob.sync('./vendor/**/*.js')),
     },
     output: {
-        filename: 'app.js',
-        path: path.resolve(__dirname, '../priv/static/js')
+        filename: '[name]-[hash].js',
+        path: path.resolve(__dirname, '../priv/static/js'),
     },
     module: {
         rules: [
@@ -47,5 +50,13 @@ module.exports = (env, options) => ({
     plugins: [
         new MiniCssExtractPlugin({ filename: '../css/app.css' }),
         new CopyWebpackPlugin([{ from: 'static/', to: '../' }]),
+        new SWPrecacheWebpackPlugin({
+                cacheId: 'book_list',
+                dontCacheBustUrlsMatching: /\.\w{8}\./,
+                filename: 'service-worker.js',
+                minify: true,
+                navigateFallback: PUBLIC_PATH + 'index.html',
+                staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+        }),
     ]
 });
