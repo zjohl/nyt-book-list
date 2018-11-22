@@ -28,6 +28,8 @@ defmodule BookListWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/signin", PageController, :index
+    get "/signup", PageController, :index
     get "/books/:id", PageController, :index
     get "/booklists/finished", PageController, :index
     get "/booklists/owned", PageController, :index

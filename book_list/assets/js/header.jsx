@@ -3,53 +3,57 @@ import $ from "jquery";
 import {Link} from "react-router-dom";
 import React from "react";
 import connect from "react-redux/es/connect/connect";
+import { withRouter } from 'react-router-dom'
 
-function login() {
-    api.create_session($('#email_form').val(), $('#password_form').val());
-    $('#email_form').val("");
-    $('#password_form').val("");
-}
+class Header extends React.Component {
+    signIn() {
+        this.props.history.push(`/signin`)
+    }
 
-function logout() {
-    api.delete_session();
-}
+    signUp() {
+        this.props.history.push(`/signup`)
+    }
 
-function signInSignUp(authenticated) {
-    if(authenticated) {
-        return (
-            <button className="logout-btn" onClick={logout}>Logout</button>
-        );
-    } else {
-        return (
-            <div>
-                <input id="email_form" type="email" placeholder="email" />
-                <input id="password_form" type="password" placeholder="password" />
-                <button className="btn btn-secondary" onClick={login}>Login</button>
+    logout() {
+        api.delete_session();
+    }
+
+    signInSignUp(authenticated) {
+        if (authenticated) {
+            return (
+                <button className="logout-btn" onClick={this.logout.bind(this)}>Logout</button>
+            );
+        } else {
+            return (
+                <div>
+                    <button className="signin-btn" onClick={this.signIn.bind(this)}>Sign In</button>
+                    <button className="signout-btn" onClick={this.signUp.bind(this)}>Sign Out</button>
+                </div>
+            );
+        }
+    }
+
+    renderWishlistLink(authenticated) {
+        if (authenticated) {
+            return <Link to={"/booklists/wanted"} onClick={() => api.fetch_book_lists()}>MyWishlists</Link>;
+        }
+        return null;
+    }
+
+    render() {
+        let {session} = this.props;
+        let authenticated = session && session.token;
+
+        return <div className="header">
+            <div className="header-left">
+                <Link className="header-app-link" to={"/"} onClick={() => api.fetch_books()}>NYT Bestsellers</Link>
+                {this.renderWishlistLink(authenticated)}
             </div>
-        );
+            <div className="header-right">
+                {this.signInSignUp(authenticated)}
+            </div>
+        </div>;
     }
 }
 
-function renderWishlistLink(authenticated) {
-    if(authenticated) {
-        return <Link to={"/booklists/wanted"} onClick={() => api.fetch_book_lists()}>MyWishlists</Link>;
-    }
-    return null;
-}
-
-function Header(props) {
-    let {session} = props;
-    let authenticated = session && session.token;
-
-    return <div className="header">
-        <div className="header-left">
-            <Link className="header-app-link" to={"/"} onClick={() => api.fetch_books()}>NYT Bestsellers</Link>
-            {renderWishlistLink(authenticated)}
-        </div>
-        <div className="header-right">
-            {signInSignUp(authenticated)}
-        </div>
-    </div>;
-}
-
-export default connect((state) => {return {session: state.session};})(Header);
+export default connect((state) => {return {session: state.session};})( withRouter(Header));

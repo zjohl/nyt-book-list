@@ -6,8 +6,7 @@ import socket from "./socket";
 import api from './api';
 import BookListButton from './book_list_button';
 import store from "./store";
-
-
+import { withRouter } from 'react-router-dom'
 
 
 class BookPage extends React.Component {
@@ -22,6 +21,11 @@ class BookPage extends React.Component {
     }
 
     createReview() {
+        let authenticated = this.props.session && this.props.session.token;
+        if(!authenticated) {
+            this.props.history.push(`/signup`)
+        }
+
         let reviewTextbox = $("#review");
         api.create_review({
             review: {
@@ -118,7 +122,7 @@ class BookPage extends React.Component {
                         <a className="amazon-button" href={book.amazon_url}>Buy from Amazon</a>
                         {<BookListButton
                             book_id={id}
-                            user_id={session.user_id}
+                            user_id={authenticated ? session.user_id : null}
                             authenticated={authenticated}
                             book_list={book_list}
                         />}
@@ -139,4 +143,4 @@ class BookPage extends React.Component {
 }
 
 
-export default connect((state) => {return {reviews: state.reviews, book_lists: state.book_lists, books: state.books, users: state.users, session: state.session};})(BookPage);
+export default connect((state) => {return {reviews: state.reviews, book_lists: state.book_lists, books: state.books, users: state.users, session: state.session};})(withRouter(BookPage));

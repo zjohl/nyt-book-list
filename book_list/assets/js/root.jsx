@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import api from './api';
 import BookList from './books';
 import BookPage from './book_page';
+import AuthPage from './auth_page';
 import BookListPage from './book_list_page';
 import Header from './header';
 
@@ -33,7 +34,7 @@ class Root extends React.Component {
         return <div>
             <Router>
                 <div>
-                    <Header/>
+                    <Header />
                     <Route path="/" exact={true} render={(props) =>
                         <div className="page-content">
                             <BookList {...props}/>
@@ -47,6 +48,16 @@ class Root extends React.Component {
                     <Route  path="/booklists/:type" render={(props) =>
                         <div className="page-content">
                             <BookListPage {...props}/>
+                        </div>
+                    } />
+                    <Route  path="/signup" render={(props) =>
+                        <div className="page-content">
+                            <AuthPage {...props}/>
+                        </div>
+                    } />
+                    <Route  path="/signin" render={(props) =>
+                        <div className="page-content">
+                            <AuthPage {...props}/>
                         </div>
                     } />
                 </div>
