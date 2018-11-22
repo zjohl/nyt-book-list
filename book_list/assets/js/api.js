@@ -25,7 +25,6 @@ class Server {
     }
 
     fetch_books() {
-
         this.fetch_path(
             "/api/v1/books",
             (resp) => {

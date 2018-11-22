@@ -15,11 +15,6 @@ window.jQuery = window.$ = jQuery;
 import _ from "lodash";
 
 // Import local files
-//
-// Local files can be imported directly using relative paths, for example:
-// import socket from "./socket"
-
-
 import root_init from "./root";
 import store from './store';
 import registerServiceWorker from "./service-worker-registration";

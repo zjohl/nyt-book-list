@@ -2,8 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import socket from "./socket";
 import api from './api';
 import BookListButton from './book_list_button';
+import store from "./store";
 
 
 
@@ -13,12 +15,14 @@ class BookPage extends React.Component {
         super(props);
 
         if(props.match) {
-            api.fetch_reviews(props.match.params.id);
+            socket.connect();
+            this.channel = socket.channel("reviews:" + props.match.params.id, {});
+            this.channel.on("update", this.receiveView.bind(this));
         }
     }
 
     createReview() {
-        let reviewTextbox = $("#review")
+        let reviewTextbox = $("#review");
         api.create_review({
             review: {
                 content: reviewTextbox.val(),
@@ -29,6 +33,15 @@ class BookPage extends React.Component {
         reviewTextbox.val("");
     }
 
+    receiveView(view) {
+        let data = view.reviews;
+
+        store.dispatch({
+            type: 'REVIEWS',
+            data: data,
+        });
+    }
+
     reviews(reviews, users) {
         if(_.isEmpty(users) || _.isEmpty(reviews)) {
             return <p>No reviews yet</p>;
@@ -36,8 +49,8 @@ class BookPage extends React.Component {
 
         return _.map(reviews, (review) => {
             let user = _.find(users, (user) => {
-                return user.id == review.user_id;
-            })
+                return user.id === review.user_id;
+            });
 
             return <div key={review.id}>
                 <p>{user.first_name} said:</p>
@@ -64,7 +77,7 @@ class BookPage extends React.Component {
     reviewContent(reviews, book, users, user_id) {
         let hasReview = _.some(reviews, (review) =>{
             return review.book_id === book.id && review.user_id.toString() === user_id;
-        })
+        });
 
         return (
             <div>
