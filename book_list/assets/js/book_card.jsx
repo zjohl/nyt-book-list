@@ -7,9 +7,9 @@ import api from "./api";
 
 
 function BookCard(props) {
-    let {book, authenticated, booklists} = props;
+    let {book, session, authenticated, booklists} = props;
     if(authenticated) {
-        this.book_list = _.find(booklists, (item) => { return book.id === item.book_id && props.session.user_id === item.user_id.toString() });
+        this.book_list = _.find(booklists, (item) => { return book.id === item.book_id && session.user_id === item.user_id.toString() });
     }
 
     return <div className="book-card">
@@ -26,7 +26,7 @@ function BookCard(props) {
                 <a className="amazon-button" href={book.amazon_url}>Buy from Amazon</a>
                 {authenticated ? <BookListButton
                     book_id={book.id}
-                    user_id={props.session ? props.session.user_id : null}
+                    user_id={session ? session.user_id : null}
                     authenticated={authenticated}
                     book_list={this.book_list}
                 /> : null}
