@@ -217,9 +217,7 @@ $button-hover-grey: #949499;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-
-
+    justify-content: flex-start;
   }
 
   @media (min-width: 641px) {

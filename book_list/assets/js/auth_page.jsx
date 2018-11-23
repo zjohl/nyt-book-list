@@ -7,7 +7,7 @@ import api from './api';
 import store from "./store";
 
 import {Link, Redirect, withRouter} from "react-router-dom";
-
+import { withAlert } from 'react-alert'
 
 
 class AuthPage extends React.Component {
@@ -32,6 +32,7 @@ class AuthPage extends React.Component {
         let password = $('#password_form');
 
         api.create_session(email.val(), password.val());
+        this.props.alert.show("Login failed");
     }
 
 
@@ -54,7 +55,7 @@ class AuthPage extends React.Component {
                         <label htmlFor="password">Password</label>
                         <input id="password" name="password" type="password" placeholder="********" />
                     </div>
-                    <button className="button" onClick={this.login}>Sign In</button>
+                    <button className="button" onClick={this.login.bind(this)}>Sign In</button>
                 </div>
             )
         } else {
@@ -76,11 +77,11 @@ class AuthPage extends React.Component {
                         <label htmlFor="password">Password</label>
                         <input id="password" name="password" type="password" placeholder="********" />
                     </div>
-                    <button className="button" onClick={this.createAccount}>Sign Up</button>
+                    <button className="button" onClick={this.createAccount.bind(this)}>Sign Up</button>
                 </div>
             )
         }
     }
 }
 
-export default connect((state) => {return {session: state.session};})( AuthPage);
+export default connect((state) => {return {session: state.session};})( withAlert(AuthPage));

@@ -24,17 +24,17 @@ class BookPage extends React.Component {
         let authenticated = this.props.session && this.props.session.token;
         if(!authenticated) {
             this.props.history.push(`/signup`)
+        } else {
+            let reviewTextbox = $("#review");
+            api.create_review({
+                review: {
+                    content: reviewTextbox.val(),
+                    book_id: this.props.match.params.id,
+                    user_id: this.props.session.user_id,
+                }
+            });
+            reviewTextbox.val("");
         }
-
-        let reviewTextbox = $("#review");
-        api.create_review({
-            review: {
-                content: reviewTextbox.val(),
-                book_id: this.props.match.params.id,
-                user_id: this.props.session.user_id,
-            }
-        });
-        reviewTextbox.val("");
     }
 
     receiveView(view) {
@@ -70,9 +70,9 @@ class BookPage extends React.Component {
 
         return (
             <div className="new-review">
-                        <textarea id="review" name="review" minLength="1" spellCheck="true"
-                                  rows="5" cols="33" placeholder="Leave a review">
-                        </textarea>
+                <textarea id="review" name="review" minLength="1" spellCheck="true"
+                          rows="5" cols="33" placeholder="Leave a review">
+                </textarea>
                 <button className="review-button button" onClick={this.createReview.bind(this)}>Submit review</button>
             </div>
         );

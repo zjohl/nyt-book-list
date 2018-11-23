@@ -14,9 +14,12 @@
     "phoenix_html": "file:../deps/phoenix_html",
     "popper.js": "^1.14.4",
     "react": "^16.6.0",
+    "react-alert": "^4.0.4",
+    "react-alert-template-basic": "^1.0.0",
     "react-dom": "^16.6.0",
     "react-redux": "^5.1.0",
     "react-router-dom": "^4.3.1",
+    "react-transition-group": "^2.5.0",
     "redux": "^4.0.1"
   },
   "devDependencies": {

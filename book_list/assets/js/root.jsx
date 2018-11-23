@@ -12,6 +12,8 @@ import BookPage from './book_page';
 import AuthPage from './auth_page';
 import BookListPage from './book_list_page';
 import Header from './header';
+import { Provider as AlertProvider } from 'react-alert';
+import AlertTemplate from 'react-alert-template-basic';
 
 export default function root_init(node, store) {
     let books = window.books;
@@ -20,6 +22,13 @@ export default function root_init(node, store) {
             <Root books={books} />
         </Provider>, node);
 }
+
+const options = {
+    position: 'bottom center',
+    timeout: 5000,
+    offset: '30px',
+    transition: 'scale'
+};
 
 class Root extends React.Component {
     constructor(props) {
@@ -30,8 +39,9 @@ class Root extends React.Component {
         api.fetch_users();
     }
 
+
     render() {
-        return <div>
+        return <AlertProvider template={AlertTemplate} {...options}>
             <Router>
                 <div>
                     <Header />
@@ -62,6 +72,6 @@ class Root extends React.Component {
                     } />
                 </div>
             </Router>
-        </div>;
+        </AlertProvider>;
     }
 }
