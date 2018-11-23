@@ -82,7 +82,7 @@ class Server {
                 data: JSON.stringify(user_data),
             success: (resp) => {
                 this.fetch_users();
-                this.fetch_book_lists(user_data.user.id);
+                this.create_session(user_data.user.email, user_data.user.password);
             }
         });
     }

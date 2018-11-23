@@ -356,3 +356,45 @@ $button-hover-grey: #949499;
     }
   }
 }
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+
+  .input-group {
+    margin-top: 8px;
+
+    input {
+      width: calc(100% - 6px);
+      height: 20px;
+      border-radius: 2px;
+      border: 1px solid lightgray;
+      padding-left: 4px;
+    }
+  }
+
+  .button {
+    margin-top: 12px;
+    background: $color-blue;
+
+    &:hover,
+    &:focus {
+      background: mix(black, $color-blue, 10%);
+    }
+  }
+
+
+  @media (min-width: 641px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .input-group {
+      width: 46%;
+    }
+
+    .button {
+      width: 120px;
+    }
+  }
+}
