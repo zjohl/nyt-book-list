@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { Link } from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 
 
 import api from './api';
@@ -29,7 +29,7 @@ function bookListContent(props) {
 
     let thisList = _.filter(book_lists, (item) => {
         return item.type === type;
-    })
+    });
 
     if(_.isEmpty(thisList)) {
         return <div>You don't have any books in your {type} list yet!</div>

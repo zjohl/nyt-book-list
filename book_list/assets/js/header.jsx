@@ -21,13 +21,13 @@ class Header extends React.Component {
     signInSignUp(authenticated) {
         if (authenticated) {
             return (
-                <button className="logout-btn" onClick={this.logout.bind(this)}>Logout</button>
+                <button className="button logout-btn" onClick={this.logout.bind(this)}>Logout</button>
             );
         } else {
             return (
                 <div>
-                    <button className="signin-btn" onClick={this.signIn.bind(this)}>Sign In</button>
-                    <button className="signout-btn" onClick={this.signUp.bind(this)}>Sign Out</button>
+                    <button className="button signin-btn" onClick={this.signIn.bind(this)}>Sign In</button>
+                    <button className="button signout-btn" onClick={this.signUp.bind(this)}>Sign Up</button>
                 </div>
             );
         }

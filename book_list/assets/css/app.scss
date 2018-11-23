@@ -39,6 +39,8 @@ $color-blue-active: #0A3C78;
 $color-orange: #D9560C;
 $color-red: #CA0B31;
 $light-grey: #73847F;
+$button-grey: #BFC0C2;
+$button-hover-grey: #949499;
 
 // Color Scheme
 // http://paletton.com/#uid=1390u0kuhrdkcv6pdtHwFn2DGjh
@@ -73,16 +75,8 @@ $light-grey: #73847F;
   .header-right {
     margin-right: 5px;
 
-    button {
-      display: inline-block;
-      border: none;
-      border-radius: 2px;
-      margin: 0;
-      text-decoration: none;
-      padding: 5px 10px;
-      font-size: 1rem;
-      cursor: pointer;
-      text-align: center;
+    .signin-btn {
+      margin-right: 5px;
     }
 
     .logout-btn {
@@ -101,6 +95,12 @@ $light-grey: #73847F;
   font-size: 1rem;
   cursor: pointer;
   text-align: center;
+  background: $button-grey;
+
+  &:hover,
+  &:focus {
+    background: $button-hover-grey;
+  }
 }
 
 .book-lists {
