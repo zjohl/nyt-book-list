@@ -12,6 +12,14 @@ import { withAlert } from 'react-alert'
 
 class AuthPage extends React.Component {
 
+    creationFailedAlert() {
+        this.props.alert.show("Account creation failed");
+    }
+
+    loginFailedAlert() {
+        this.props.alert.show("Login failed");
+    }
+
     createAccount() {
         api.delete_session();
         let email = $('#email');
@@ -23,16 +31,15 @@ class AuthPage extends React.Component {
             last_name: l_name.val(),
             email: email.val(),
             password: password.val(),
-        }});
+        }}, this.creationFailedAlert.bind(this));
     }
 
     login() {
         api.delete_session();
-        let email = $('#email_form');
-        let password = $('#password_form');
+        let email = $('#email');
+        let password = $('#password');
 
-        api.create_session(email.val(), password.val());
-        this.props.alert.show("Login failed");
+        api.create_session(email.val(), password.val(), this.loginFailedAlert.bind(this));
     }
 
 
@@ -49,11 +56,11 @@ class AuthPage extends React.Component {
                 <div className="sign-in-form auth-form">
                     <div className="input-group">
                         <label htmlFor="email">Email</label>
-                        <input id="email" name="email" type="email" placeholder="me@example.com" />
+                        <input required id="email" name="email" type="email" placeholder="me@example.com" />
                     </div>
                     <div className="input-group">
                         <label htmlFor="password">Password</label>
-                        <input id="password" name="password" type="password" placeholder="********" />
+                        <input required id="password" name="password" type="password" placeholder="********" />
                     </div>
                     <button className="button" onClick={this.login.bind(this)}>Sign In</button>
                 </div>
@@ -63,19 +70,19 @@ class AuthPage extends React.Component {
                 <div className="sign-up-form auth-form">
                     <div className="input-group">
                         <label htmlFor="f_name">First Name</label>
-                        <input id="f_name" name="f_name" type="text" placeholder="John" />
+                        <input required id="f_name" name="f_name" type="text" placeholder="John" />
                     </div>
                     <div className="input-group">
                         <label htmlFor="l_name">Last Name</label>
-                        <input id="l_name" name="l_name" type="text" placeholder="Doe" />
+                        <input required id="l_name" name="l_name" type="text" placeholder="Doe" />
                     </div>
                     <div className="input-group">
                         <label htmlFor="email">Email</label>
-                        <input id="email" name="email" type="email" placeholder="me@example.com" />
+                        <input required id="email" name="email" type="email" placeholder="me@example.com" />
                     </div>
                     <div className="input-group">
                         <label htmlFor="password">Password</label>
-                        <input id="password" name="password" type="password" placeholder="********" />
+                        <input required id="password" name="password" type="password" placeholder="********" />
                     </div>
                     <button className="button" onClick={this.createAccount.bind(this)}>Sign Up</button>
                 </div>

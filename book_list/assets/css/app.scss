@@ -369,6 +369,10 @@ $button-hover-grey: #949499;
       border: 1px solid lightgray;
       padding-left: 4px;
     }
+
+    input:invalid {
+      background-color: #CC9DA3;
+    }
   }
 
   .button {

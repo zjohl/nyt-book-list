@@ -74,7 +74,7 @@ class Server {
 
     }
 
-    create_user(user_data) {
+    create_user(user_data, onFail) {
         $.ajax("/api/v1/users/", {
             method: "post",
             dataType: "json",
@@ -82,7 +82,12 @@ class Server {
                 data: JSON.stringify(user_data),
             success: (resp) => {
                 this.fetch_users();
-                this.create_session(user_data.user.email, user_data.user.password);
+                this.create_session(user_data.user.email, user_data.user.password, null);
+            },
+            error: (resp) => {
+                if(onFail) {
+                    onFail();
+                }
             }
         });
     }
@@ -139,17 +144,18 @@ class Server {
         });
     }
 
-    send_post(path, data, callback) {
+    send_post(path, data, callback, onFail) {
         $.ajax(path, {
             method: "post",
             dataType: "json",
             contentType: "application/json; charset=UTF-8",
             data: JSON.stringify(data),
             success: callback,
+            error: onFail,
         });
     }
 
-    create_session(email, password) {
+    create_session(email, password, onFail) {
         this.send_post(
             "/api/v1/sessions",
             {email, password},
@@ -160,7 +166,8 @@ class Server {
                     type: 'NEW_SESSION',
                     data: resp.data,
                 });
-            }
+            },
+            onFail,
         );
     }
 
