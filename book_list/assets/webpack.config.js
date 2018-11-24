@@ -4,9 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
-
-const PUBLIC_PATH = 'http://localhost:4000/js/';
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = (env, options) => ({
     optimization: {
@@ -16,7 +14,8 @@ module.exports = (env, options) => ({
         ]
     },
     entry: {
-        './js/app.js': ['./js/app.js'].concat(glob.sync('./vendor/**/*.js')),
+        main: ['./js/app.js'].concat(glob.sync('./vendor/**/*.js')),
+        sw: ['./js/service-worker.js'].concat(glob.sync('./vendor/**/*.js')),
     },
     output: {
         filename: 'app.js',
@@ -50,13 +49,18 @@ module.exports = (env, options) => ({
     plugins: [
         new MiniCssExtractPlugin({ filename: '../css/app.css' }),
         new CopyWebpackPlugin([{ from: 'static/', to: '../' }]),
-        new SWPrecacheWebpackPlugin({
-                cacheId: 'book_list',
-                dontCacheBustUrlsMatching: /\.\w{8}\./,
-                filename: 'service-worker.js',
-                minify: true,
-                navigateFallback: PUBLIC_PATH + 'index.html',
-                staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+        new WorkboxPlugin.GenerateSW({
+            exclude: [/\.(?:png|jpg|jpeg|svg)$/],
+            runtimeCaching: [{
+                urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
+                handler: 'cacheFirst',
+                options: {
+                    cacheName: 'images',
+                    expiration: {
+                        maxEntries: 10,
+                    },
+                },
+            }],
         }),
     ]
 });
