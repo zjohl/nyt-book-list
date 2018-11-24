@@ -22,7 +22,6 @@ defmodule BookList.Books.Book do
   def changeset(book, attrs) do
     book
     |> cast(attrs, [:title, :description, :author, :publisher, :isbn, :cover_url, :amazon_url])
-    |> unique_constraint([:title, :author])
     |> validate_required([:title, :description, :author, :publisher, :isbn, :cover_url, :amazon_url])
   end
 end

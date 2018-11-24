@@ -15,7 +15,6 @@ defmodule BookList.Reviews.Review do
   def changeset(review, attrs) do
     review
     |> cast(attrs, [:content, :user_id, :book_id])
-    |> unique_constraint([:user_id, :book_id])
     |> validate_required([:content, :user_id, :book_id])
   end
 end

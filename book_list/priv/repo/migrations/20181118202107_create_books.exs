@@ -14,5 +14,7 @@ defmodule BookList.Repo.Migrations.CreateBooks do
       timestamps()
     end
 
+    create index(:books, [:title, :author], unique: true)
+
   end
 end

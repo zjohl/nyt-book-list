@@ -15,7 +15,6 @@ defmodule BookList.BookLists.BookList do
   def changeset(book_list, attrs) do
     book_list
     |> cast(attrs, [:type, :user_id, :book_id])
-    |> unique_constraint([:user_id, :book_id])
     |> validate_required([:type, :user_id, :book_id])
   end
 end
