@@ -7,7 +7,7 @@ import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import api from './api';
-import BookList from './books';
+import BookList from './books_page';
 import BookPage from './book_page';
 import AuthPage from './auth_page';
 import BookListPage from './book_list_page';

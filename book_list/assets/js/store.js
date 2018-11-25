@@ -4,7 +4,7 @@ import deepFreeze from 'deep-freeze';
 function books(state = [], action) {
     switch (action.type) {
         case 'BOOKS':
-            return action.data;
+            return _.concat(state, action.data);
         default:
             return state;
     }

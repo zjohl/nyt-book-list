@@ -35,7 +35,7 @@ class Header extends React.Component {
 
     renderWishlistLink(authenticated) {
         if (authenticated) {
-            return <Link to={"/booklists/wanted"} onClick={() => api.fetch_book_lists()}>MyWishlists</Link>;
+            return <Link className={"booklists"} to={"/booklists/wanted"} onClick={() => api.fetch_book_lists()}>MyWishlists</Link>;
         }
         return null;
     }

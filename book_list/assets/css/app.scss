@@ -66,6 +66,13 @@ $button-hover-grey: #949499;
       font-size: 16px;
     }
 
+    .booklists {
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+      }
+    }
+
     .header-app-link {
       font-size: 18px;
       margin-right: 5px;
@@ -154,6 +161,14 @@ $button-hover-grey: #949499;
 
   @media (min-width: 821px) {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  div {
+    
+  }
+
+  span {
+    grid-column: 1/3;
   }
 }
 
