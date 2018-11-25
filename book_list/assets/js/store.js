@@ -1,10 +1,11 @@
 import { createStore, combineReducers } from 'redux';
 import deepFreeze from 'deep-freeze';
+import _ from 'lodash';
 
 function books(state = [], action) {
     switch (action.type) {
         case 'BOOKS':
-            return _.concat(state, action.data);
+            return _.sortedUniqBy(_.sortBy(_.concat(state, action.data), (book) => {return book.id}), (book) => {return book.id});
         default:
             return state;
     }
