@@ -20,7 +20,7 @@ class BooksPage extends React.Component {
         let bookCards = _.map(books, (book) => <BookCard
             key={book.id}
             book={book}
-            booklists={book_lists}
+            book_lists={book_lists}
             authenticated={authenticated}
             session={session}
         />);

@@ -80,7 +80,7 @@ class BookPage extends React.Component {
 
     reviewContent(reviews, book, users, user_id) {
         let hasReview = _.some(reviews, (review) =>{
-            return review.book_id === book.id && review.user_id.toString() === user_id;
+            return review.book_id.toString() === book.id.toString() && review.user_id.toString() === user_id.toString();
         });
 
         return (
@@ -97,14 +97,14 @@ class BookPage extends React.Component {
 
         let id = this.props.match.params.id;
         let book = _.find(this.props.books, (book) => {
-            return book.id.toString() === id
+            return book.id.toString() === id.toString();
         });
         if (!book) {
             return null;
         }
 
         let book_list = _.find(this.props.book_lists, (item) => {
-            return id === item.book_id.toString() && session.user_id === item.user_id.toString()
+            return id.toString() === item.book_id.toString() && session.user_id.toString() === item.user_id.toString();
         });
 
         return <div className="book">

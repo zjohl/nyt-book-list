@@ -48,6 +48,7 @@ class AuthPage extends React.Component {
         let authenticated = session && session.token;
 
         if(authenticated) {
+            api.fetch_book_lists(session.user_id);
             return <Redirect to="/"/>;
         }
 
