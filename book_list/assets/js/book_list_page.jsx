@@ -45,12 +45,12 @@ class BookListPage extends React.Component {
 
         let book_list_items = _.map(book_lists, (item) => {
             let book = _.find(books, (book) => {
-                return book.id === item.book_id
+                return book.id.toString() === item.book_id.toString();
             });
             return <BookCard
                 key={book.id}
                 book={book}
-                booklists={book_lists}
+                book_lists={book_lists}
                 authenticated={authenticated}
                 session={session}
             />;
