@@ -24,7 +24,7 @@ class Server {
         });
     }
 
-    fetch_books() {
+    fetch_books(page) {
         this.fetch_path(
             "/api/v1/books",
             (resp) => {
@@ -32,7 +32,7 @@ class Server {
                     type: 'BOOKS',
                     data: resp.data,
                 });
-            }
+            }, {page: page ? page : 1, page_size: 20}
         );
     }
 

@@ -3,12 +3,20 @@ defmodule BookListWeb.BookController do
 
   alias BookList.Books
   alias BookList.Books.Book
+  import Ecto.Query
 
   action_fallback BookListWeb.FallbackController
 
-  def index(conn, _params) do
-    books = Books.list_books()
-    render(conn, "index.json", books: books)
+  def index(conn, params) do
+    page = BookList.Books.Book
+           |> order_by(asc: :id)
+           |> BookList.Repo.paginate(params)
+
+    render(conn, "index.json", books: page.entries,
+      page_number: page.page_number,
+      page_size: page.page_size,
+      total_pages: page.total_pages,
+      total_entries: page.total_entries)
   end
 
   def create(conn, %{"book" => book_params}) do
