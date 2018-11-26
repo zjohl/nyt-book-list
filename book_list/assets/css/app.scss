@@ -205,7 +205,7 @@ $button-hover-grey: #949499;
 
     .booklist-button {
       display: none;
-      @media (min-width: 821px) {
+      @media (min-width: 440px) {
         display: block;
       }
     }
