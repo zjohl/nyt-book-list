@@ -23,5 +23,6 @@ defmodule BookList.Books.Book do
     book
     |> cast(attrs, [:title, :description, :author, :publisher, :isbn, :cover_url, :amazon_url])
     |> validate_required([:title, :description, :author, :publisher, :isbn, :cover_url, :amazon_url])
+    |> unique_constraint(:title, name: :books_title_author_index)
   end
 end

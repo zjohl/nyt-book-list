@@ -19,7 +19,7 @@ defmodule BookList.Users.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:email, :password_hash, :first_name, :last_name])
-    |> unique_constraint(:email)
     |> validate_required([:email, :password_hash, :first_name, :last_name])
+    |> unique_constraint(:email, name: :users_email_index)
   end
 end

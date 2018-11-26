@@ -16,8 +16,21 @@ alias BookList.Users.User
 
 pwhash = Argon2.hash_pwd_salt("password")
 
-Repo.insert!(%User{first_name: "Zamir", last_name: "Johl", email: "zamir@johl.com", password_hash: pwhash})
-Repo.insert!(%User{first_name: "Boo", last_name: "Radley", email: "boo@radley.com", password_hash: pwhash})
+changeset = User.changeset(%User{}, %{first_name: "Zamir", last_name: "Johl", email: "zamir@johl.com", password_hash: pwhash})
+case Repo.insert(changeset) do
+  {:ok, _} ->
+    {:ok}
+  {:error, changeset} ->
+    {:error}
+end
+
+changeset = User.changeset(%User{}, %{first_name: "Boo", last_name: "Radley", email: "boo@radley.com", password_hash: pwhash})
+case Repo.insert(changeset) do
+  {:ok, _} ->
+    {:ok}
+  {:error, changeset} ->
+    {:error}
+end
 
 alias BookList.Books.Book
 
@@ -45,13 +58,19 @@ Enum.reduce(0..99, date, fn(_, date) ->
         existing = Repo.one(from(b in Book, where: b.title == ^title and b.description == ^desc))
 
         if existing == nil do
-          Repo.insert!(%Book{title: title,
+          change = Book.changeset(%Book{}, %{title: title,
             description: desc,
             author: book["author"],
             isbn: book["primary_isbn10"],
             publisher: book["publisher"],
             cover_url:  book["book_image"],
             amazon_url: book["amazon_product_url"]})
+          case Repo.insert(change) do
+            {:ok, _} ->
+              {:ok}
+            {:error, change} ->
+              {:error}
+          end
         end
       end)
 
