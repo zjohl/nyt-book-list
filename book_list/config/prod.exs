@@ -71,7 +71,6 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs which should be versioned
 # separately.
-use Mix.Config
 
 # Function to manage secrets from Nat's lecture notes
 get_secret = fn name ->
@@ -86,7 +85,7 @@ get_secret = fn name ->
 end
 
 
-config :task_tracker, BookListWeb.Endpoint,
+config :book_list, BookListWeb.Endpoint,
        secret_key_base: get_secret.("key_base")
 
 # Configure your database
