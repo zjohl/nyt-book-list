@@ -30,15 +30,14 @@ class BookPage extends React.Component {
         } else {
             let reviewTextbox = $("#review");
             let book_id = this.props.match.params.id;
-            api.create_review({
-                review: {
-                    content: reviewTextbox.val(),
-                    book_id: book_id,
-                    user_id: this.props.session.user_id,
-                }
-            });
+            let review = {
+                content: reviewTextbox.val(),
+                book_id: book_id,
+                user_id: this.props.session.user_id,
+            };
+            api.create_review({review});
             reviewTextbox.val("");
-            this.channel.push("update", { reviews: this.props.reviews }
+            this.channel.push("update", { reviews: _.concat(this.props.reviews, review) }
             ).receive("ok", this.receiveView.bind(this));
         }
     }
@@ -55,12 +54,12 @@ class BookPage extends React.Component {
             return <p>No reviews yet</p>;
         }
 
-        return _.map(reviews, (review) => {
+        return _.map(reviews, (review, ii) => {
             let user = _.find(users, (user) => {
-                return user.id === review.user_id;
+                return user.id.toString() === review.user_id.toString();
             });
 
-            return <div key={review.id}>
+            return <div key={ii}>
                 <p>{user.first_name} said:</p>
                 <p className="review-content">{review.content}</p>
             </div>

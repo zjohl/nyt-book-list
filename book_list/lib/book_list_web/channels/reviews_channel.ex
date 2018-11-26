@@ -10,8 +10,7 @@ defmodule BookListWeb.ReviewsChannel do
   end
 
   def handle_in("update",  %{"reviews" => reviews}, socket) do
-    view = ReviewServer.view(socket.assigns[:book_id])
-    broadcast!(socket, "update", %{ "reviews" => view})
+    broadcast!(socket, "update", %{ "reviews" => reviews})
     {:noreply, socket}
   end
 end
