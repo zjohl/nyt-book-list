@@ -11,9 +11,10 @@ defmodule BookList.Application do
       # Start the Ecto repository
       BookList.Repo,
       # Start the endpoint when the application starts
-      BookListWeb.Endpoint
+      BookListWeb.Endpoint,
       # Starts a worker by calling: BookList.Worker.start_link(arg)
       # {BookList.Worker, arg},
+      BookList.Reviews.ReviewServer
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

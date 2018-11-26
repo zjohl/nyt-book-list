@@ -16,6 +16,9 @@ class BookPage extends React.Component {
         if(props.match) {
             socket.connect();
             this.channel = socket.channel("reviews:" + props.match.params.id, {});
+
+            this.channel.join()
+                .receive("ok", this.receiveView.bind(this));
             this.channel.on("update", this.receiveView.bind(this));
         }
     }
@@ -26,23 +29,24 @@ class BookPage extends React.Component {
             this.props.history.push(`/signup`)
         } else {
             let reviewTextbox = $("#review");
+            let book_id = this.props.match.params.id;
             api.create_review({
                 review: {
                     content: reviewTextbox.val(),
-                    book_id: this.props.match.params.id,
+                    book_id: book_id,
                     user_id: this.props.session.user_id,
                 }
             });
             reviewTextbox.val("");
+            this.channel.push("update", { reviews: this.props.reviews }
+            ).receive("ok", this.receiveView.bind(this));
         }
     }
 
     receiveView(view) {
-        let data = view.reviews;
-
         store.dispatch({
             type: 'REVIEWS',
-            data: data,
+            data: view.reviews,
         });
     }
 
@@ -58,7 +62,7 @@ class BookPage extends React.Component {
 
             return <div key={review.id}>
                 <p>{user.first_name} said:</p>
-                <p>{review.content}</p>
+                <p className="review-content">{review.content}</p>
             </div>
         })
     }
